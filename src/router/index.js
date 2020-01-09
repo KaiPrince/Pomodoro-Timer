@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
-import Pomodoro from "../components/Pomodoro.vue";
+import Pomodoro from "../views/Pomodoro.vue";
 
 Vue.use(VueRouter);
 
