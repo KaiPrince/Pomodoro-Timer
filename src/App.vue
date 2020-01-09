@@ -20,9 +20,11 @@
           width="100"
         />
 
-        <router-link to="/">Home</router-link> |
-        <router-link to="/about">About</router-link> |
-        <router-link to="/pomodoro">Pomodoro</router-link>
+        <v-btn text to="/">Home</v-btn>
+        <v-divider inset vertical></v-divider>
+        <v-btn text to="/about">About</v-btn>
+        <v-divider inset vertical></v-divider>
+        <v-btn text to="/pomodoro">Pomodoro</v-btn>
       </div>
 
       <v-spacer></v-spacer>
