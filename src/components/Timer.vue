@@ -4,9 +4,9 @@
 <template>
   <div>
     <p>{{ timerDisplay }}</p>
-    <button v-on:click="toggleTimerRunning">
+    <v-btn v-on:click="toggleTimerRunning">
       {{ !this.timerRunning ? "Start" : "Stop" }}
-    </button>
+    </v-btn>
   </div>
 </template>
 

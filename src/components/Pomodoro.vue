@@ -4,7 +4,7 @@
   <div>
     <timer v-bind:countdownInMinutes="countdownInMinutes" />
     <br />
-    <button @click="toggleShowSettings">Show Settings</button>
+    <v-btn @click="toggleShowSettings">Show Settings</v-btn>
     <PomodoroSettings v-if="showSettings" />
   </div>
 </template>
