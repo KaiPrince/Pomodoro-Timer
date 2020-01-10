@@ -9,13 +9,13 @@
     <label>Long Break Time</label>
     <input v-model.number="longBreakTime" type="number" />
     <label for="autoStartBreak">Auto Start Break</label>
-    <input type="checkbox" id="autoStartBreak" v-model="autoStartBreak" />
+    <input id="autoStartBreak" v-model="autoStartBreak" type="checkbox" />
     <label for="autoStartNextSession">Auto Start Next Session</label>
     <input
-      type="checkbox"
-      name="autoStartNextSession"
       id="autoStartNextSession"
       v-model="autoStartNextSession"
+      type="checkbox"
+      name="autoStartNextSession"
     />
   </div>
 </template>
@@ -23,6 +23,8 @@
 <script>
 export default {
   name: "PomodoroSettings",
+
+  components: {},
   props: {},
   data() {
     return {
@@ -32,8 +34,6 @@ export default {
       autoStartBreak: false,
       autoStartNextSession: false
     };
-  },
-
-  components: {}
+  }
 };
 </script>

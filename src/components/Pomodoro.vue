@@ -2,7 +2,7 @@
 
 <template>
   <div>
-    <timer v-bind:countdownInMinutes="countdownInMinutes" />
+    <timer :initial-countdown-in-minutes="countdownInMinutes" />
     <br />
     <v-btn @click="toggleShowSettings">Show Settings</v-btn>
     <PomodoroSettings v-if="showSettings" />
@@ -15,6 +15,10 @@ import PomodoroSettings from "./PomodoroSettings";
 
 export default {
   name: "PomodoroTimer",
+  components: {
+    Timer,
+    PomodoroSettings
+  },
   props: {},
   data() {
     return { countdownInMinutes: 25, showSettings: false };
@@ -23,10 +27,6 @@ export default {
     toggleShowSettings() {
       this.showSettings = !this.showSettings;
     }
-  },
-  components: {
-    Timer,
-    PomodoroSettings
   }
 };
 </script>
