@@ -4,15 +4,16 @@
 <template>
   <div>
     <p data-testid="timer-display">{{ timerDisplay }}</p>
-    <v-btn @click="toggleTimerRunning">
+    <v-btn @click="onClickStartStop">
       {{ !timerRunning ? "Start" : "Pause" }}
     </v-btn>
-    <v-btn v-if="timerRunning" @click="skipTimer">Skip</v-btn>
-    <v-btn v-if="timerRunning" @click="resetTimer">Reset</v-btn>
+    <v-btn v-if="timerRunning" @click="onClickSkip">Skip</v-btn>
+    <v-btn v-if="timerRunning" @click="onClickReset">Reset</v-btn>
   </div>
 </template>
 
 <script>
+const TIMER_TICK_TIME = 500;
 export default {
   name: "Timer",
   props: {
@@ -25,7 +26,8 @@ export default {
     return {
       tickTimer: "",
       timeRemaining: 0,
-      timerRunning: false
+      timerRunning: false,
+      elapsed: false
     };
   },
   computed: {
@@ -44,48 +46,73 @@ export default {
     }
   },
   created() {
-    this.tickTimer = this.startTickTimer();
-    this.timeRemaining = this.initialCountdownInMinutes * 60000;
+    // Start a ticker for triggering updates.
+    this.startTickTimer();
+
+    // Set the timer at initial time.
+    this.setTimerToInitialValue();
   },
   destroyed() {
-    this.stopTickTimer();
+    // Clear ticker.
+    this.clearTickTimer();
   },
   methods: {
     startTickTimer() {
-      return setInterval(this.updateTimerDisplay, 1000);
+      this.tickTimer = setInterval(this.updateTimeRemaining, TIMER_TICK_TIME);
     },
-    stopTickTimer(timerHandle) {
-      return clearInterval(timerHandle);
+    clearTickTimer() {
+      clearInterval(this.tickTimer);
     },
-    updateTimerDisplay() {
+    updateTimeRemaining() {
       if (this.timerRunning) {
-        this.timeRemaining -= 1000;
-
-        // When timer expires, stop timer.
-        if (this.timeRemaining <= 1000) {
-          this.stopTimer();
+        if (this.timeRemaining > TIMER_TICK_TIME) {
+          // Decrement timer.
+          this.timeRemaining -= TIMER_TICK_TIME;
+        } else {
+          // Trigger when timer expires.
+          this.timerElapsed();
         }
-      }
-    },
-    toggleTimerRunning: function() {
-      if (!this.timerRunning) {
-        this.startTimer();
       } else {
-        this.stopTimer();
+        // Do nothing if timer is not running.
       }
     },
-    startTimer() {
+    onClickStartStop: function() {
+      if (!this.timerRunning) {
+        this.onClickStart();
+      } else {
+        this.onClickStop();
+      }
+    },
+    onClickStart() {
+      if (this.elapsed) {
+        this.setTimerToInitialValue();
+        this.elapsed = false;
+      }
       this.timerRunning = true;
     },
-    stopTimer() {
+    onClickStop() {
       this.timerRunning = false;
     },
-    resetTimer() {
-      this.timeRemaining = this.initialCountdownInMinutes * 60000;
+    onClickReset() {
+      this.setTimerToInitialValue();
       this.timerRunning = false;
     },
-    skipTimer() {
-      this.resetTimer();
+    onClickSkip() {
+      this.setTimerToInitialValue();
+      this.timerRunning = false;
+    },
+    timerElapsed() {
+      // When timer expires, stop timer.
+      this.elapsed = true;
+      this.timerRunning = false;
+    },
+    getTimeFromMinutes(minutes) {
+      return minutes * 60000;
+    },
+    setTimerToInitialValue() {
+      this.timeRemaining = this.getTimeFromMinutes(
+        this.initialCountdownInMinutes
+      );
     }
   }
 };
