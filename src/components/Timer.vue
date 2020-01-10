@@ -20,6 +20,10 @@ export default {
     initialCountdownInMinutes: {
       type: Number,
       default: 0
+    },
+    onElapsed: {
+      type: Function,
+      default: () => {}
     }
   },
   data() {
@@ -105,6 +109,9 @@ export default {
       // When timer expires, stop timer.
       this.elapsed = true;
       this.timerRunning = false;
+
+      // Trigger onElapsed Callback
+      this.onElapsed();
     },
     getTimeFromMinutes(minutes) {
       return minutes * 60000;

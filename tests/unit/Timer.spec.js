@@ -5,6 +5,7 @@ import TimerComponent from "@/components/Timer.vue";
 import { expect } from "chai";
 import { sleep } from "../_utils";
 import Vue from "vue";
+import sinon from "sinon";
 
 describe("Timer", () => {
   const renderTimerComponent = function(minutes = 25) {
@@ -159,21 +160,29 @@ describe("Timer", () => {
     }
   });
 
-  it("Triggers a callback when timer expires", function() {
+  it("Triggers a callback when timer expires", async function() {
     // Arrange
-    const callback = function() {
-      //TODO..
-    };
+    const callback = sinon.fake();
 
-    render(TimerComponent, {
+    const { getByText } = render(TimerComponent, {
       props: {
-        initialCountdownInMinutes: 1 / 60,
+        //..Start timer for 1/4 second
+        initialCountdownInMinutes: 1 / 4 / 60,
         onElapsed: callback
       }
     });
 
+    const startButton = getByText(/Start/i).closest("button");
+    fireEvent.click(startButton);
+
     // Act
 
     // Assert
+    await wait(
+      function() {
+        expect(callback.calledOnce).to.be.true;
+      },
+      { timeout: 1000 }
+    );
   });
 });
