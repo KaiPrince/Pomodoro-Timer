@@ -7,7 +7,7 @@
     <v-btn @click="toggleTimerRunning">
       {{ !timerRunning ? "Start" : "Pause" }}
     </v-btn>
-    <v-btn v-if="timerRunning">Skip</v-btn>
+    <v-btn v-if="timerRunning" @click="skipTimer">Skip</v-btn>
     <v-btn v-if="timerRunning" @click="resetTimer">Reset</v-btn>
   </div>
 </template>
@@ -83,6 +83,9 @@ export default {
     resetTimer() {
       this.timeRemaining = this.initialCountdownInMinutes * 60000;
       this.timerRunning = false;
+    },
+    skipTimer() {
+      this.resetTimer();
     }
   }
 };
