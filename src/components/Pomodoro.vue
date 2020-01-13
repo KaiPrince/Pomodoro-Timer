@@ -57,11 +57,11 @@ export default {
     },
     onTimerElapsed() {
       if (this.isWorkStage) {
-        this.$store.dispatch("breakStage");
+        this.breakStage();
       } else if (this.isBreakStage) {
-        this.$store.dispatch("workStage");
+        this.workStage();
       } else if (this.isLongBreakStage) {
-        this.$store.dispatch("workStage");
+        this.workStage();
       } else {
         console.error("Unkown stage:", this.$store.state.stage);
       }
