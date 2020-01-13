@@ -14,6 +14,11 @@
 
 <script>
 const TIMER_TICK_TIME = 500;
+
+function getTimeFromMinutes(minutes) {
+  return minutes * 60000;
+}
+
 export default {
   name: "Timer",
   props: {
@@ -29,7 +34,7 @@ export default {
   data() {
     return {
       tickTimer: "",
-      timeRemaining: 0,
+      timeRemaining: getTimeFromMinutes(this.initialCountdownInMinutes),
       timerRunning: false,
       elapsed: false
     };
@@ -49,12 +54,14 @@ export default {
       return `${minutesString}:${secondsString}`;
     }
   },
+  watch: {
+    initialCountdownInMinutes: function(newValue) {
+      this.timeRemaining = getTimeFromMinutes(newValue);
+    }
+  },
   created() {
     // Start a ticker for triggering updates.
     this.startTickTimer();
-
-    // Set the timer at initial time.
-    this.setTimerToInitialValue();
   },
   destroyed() {
     // Clear ticker.
@@ -102,8 +109,9 @@ export default {
       this.timerRunning = false;
     },
     onClickSkip() {
-      this.setTimerToInitialValue();
-      this.timerRunning = false;
+      this.timeRemaining = 0;
+
+      this.timerElapsed();
     },
     timerElapsed() {
       // When timer expires, stop timer.
@@ -113,13 +121,8 @@ export default {
       // Trigger onElapsed Callback
       this.onElapsed();
     },
-    getTimeFromMinutes(minutes) {
-      return minutes * 60000;
-    },
     setTimerToInitialValue() {
-      this.timeRemaining = this.getTimeFromMinutes(
-        this.initialCountdownInMinutes
-      );
+      this.timeRemaining = getTimeFromMinutes(this.initialCountdownInMinutes);
     }
   }
 };

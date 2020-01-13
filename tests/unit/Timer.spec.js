@@ -7,6 +7,7 @@ import { sleep } from "../_utils";
 import Vue from "vue";
 import sinon from "sinon";
 
+/// These tests take long (>1 sec)
 describe("Timer", () => {
   const renderTimerComponent = function(minutes = 25) {
     return render(TimerComponent, {
@@ -121,43 +122,11 @@ describe("Timer", () => {
     await wait(
       function() {
         const timerDisplayValue = timerDisplay.innerHTML;
-        expect(timerDisplayValue).to.equal("25:00");
+
+        expect(timerDisplayValue).to.equal("00:00");
       },
       { timeout: 10 }
     );
-  });
-
-  // (This test is broken)
-  it.skip("Resets the timer when the start button is clicked after it expires", async function() {
-    // Arrange
-    //..Start timer for 1 second
-    const { getByText, getByTestId } = renderTimerComponent(1 / 60);
-
-    const timerDisplay = getByTestId("timer-display");
-    expect(timerDisplay.innerHTML).to.equal("00:01");
-
-    const startButton = getByText(/Start/i).closest("button");
-    fireEvent.click(startButton);
-
-    // Act
-    //..Let timer elapse
-    await sleep(1000);
-
-    // Assert
-    {
-      const timerDisplayValue = timerDisplay.innerHTML;
-      expect(timerDisplayValue).to.equal("00:00");
-    }
-
-    // Act
-    fireEvent.click(startButton);
-
-    // Assert
-    await Vue.nextTick();
-    {
-      const timerDisplayValue = timerDisplay.innerHTML;
-      expect(timerDisplayValue).to.equal("00:01");
-    }
   });
 
   it("Triggers a callback when timer expires", async function() {
@@ -183,6 +152,43 @@ describe("Timer", () => {
         expect(callback.calledOnce).to.be.true;
       },
       { timeout: 1000 }
+    );
+  });
+
+  it("Triggers a callback when timer is skipped", async function() {
+    // Arrange
+    //..Start timer
+    const callback = sinon.fake();
+
+    const { getByText, getByTestId } = render(TimerComponent, {
+      props: {
+        initialCountdownInMinutes: 25,
+        onElapsed: callback
+      }
+    });
+
+    const startButton = getByText(/Start/i).closest("button");
+    fireEvent.click(startButton);
+
+    await Vue.nextTick();
+
+    const timerDisplay = getByTestId("timer-display");
+
+    const skipButton = getByText(/Skip/i).closest("button");
+
+    // Act
+    fireEvent.click(skipButton);
+    await Vue.nextTick();
+
+    // Assert
+    await wait(
+      function() {
+        const timerDisplayValue = timerDisplay.innerHTML;
+
+        expect(timerDisplayValue).to.equal("00:00");
+        expect(callback.calledOnce).to.be.true;
+      },
+      { timeout: 10 }
     );
   });
 });
