@@ -49,15 +49,21 @@ export default {
       }
     },
     ...mapGetters(["isWorkStage", "isBreakStage", "isLongBreakStage"]),
-    ...mapState(["workTime", "breakTime", "longBreakTime"])
+    ...mapState(["workTime", "breakTime", "longBreakTime", "countCycles"])
   },
   methods: {
     toggleShowSettings() {
       this.showSettings = !this.showSettings;
     },
     onTimerElapsed() {
+      this.incrementCycles();
       if (this.isWorkStage) {
-        this.breakStage();
+        if (this.countCycles >= 3) {
+          this.resetCycles();
+          this.longBreakStage();
+        } else {
+          this.breakStage();
+        }
       } else if (this.isBreakStage) {
         this.workStage();
       } else if (this.isLongBreakStage) {
@@ -66,7 +72,13 @@ export default {
         console.error("Unkown stage:", this.$store.state.stage);
       }
     },
-    ...mapActions(["breakStage", "workStage", "longBreakStage"])
+    ...mapActions([
+      "breakStage",
+      "workStage",
+      "longBreakStage",
+      "incrementCycles",
+      "resetCycles"
+    ])
   }
 };
 </script>
