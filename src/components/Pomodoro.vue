@@ -48,8 +48,13 @@ export default {
         return 0;
       }
     },
-    ...mapGetters(["isWorkStage", "isBreakStage", "isLongBreakStage"]),
-    ...mapState(["workTime", "breakTime", "longBreakTime", "countCycles"])
+    ...mapGetters("Pomodoro", [
+      "isWorkStage",
+      "isBreakStage",
+      "isLongBreakStage"
+    ]),
+    ...mapState("Pomodoro", ["countCycles"]),
+    ...mapState("PomodoroSettings", ["workTime", "breakTime", "longBreakTime"])
   },
   methods: {
     toggleShowSettings() {
@@ -72,7 +77,7 @@ export default {
         console.error("Unkown stage:", this.$store.state.stage);
       }
     },
-    ...mapActions([
+    ...mapActions("Pomodoro", [
       "breakStage",
       "workStage",
       "longBreakStage",

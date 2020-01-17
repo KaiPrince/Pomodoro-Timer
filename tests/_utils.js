@@ -12,7 +12,7 @@ export const renderComponent = function(component, customState = {}) {
   return render(component, {
     store: {
       ...appStore,
-      state: { ...appStore.state, ...customState }
+      modules: { ...appStore.modules, ...customState }
     }
   });
 };

@@ -6,9 +6,9 @@ export const constants = {
   LONG_BREAK_STAGE: "LONG_BREAK_STAGE"
 };
 
-export const initialState = { stage: constants.WORK_STAGE, countCycles: 0 };
+const initialState = { stage: constants.WORK_STAGE, countCycles: 0 };
 
-export const mutations = {
+const mutations = {
   changeStage(state, payload) {
     state.stage = payload;
   },
@@ -17,7 +17,7 @@ export const mutations = {
   }
 };
 
-export const actions = {
+const actions = {
   workStage(context) {
     context.commit("changeStage", constants.WORK_STAGE);
   },
@@ -35,8 +35,17 @@ export const actions = {
   }
 };
 
-export const getters = {
+const getters = {
   isWorkStage: state => state.stage === constants.WORK_STAGE,
   isBreakStage: state => state.stage === constants.BREAK_STAGE,
   isLongBreakStage: state => state.stage === constants.LONG_BREAK_STAGE
 };
+
+const module = {
+  state: initialState,
+  mutations: mutations,
+  actions: actions,
+  getters: getters
+};
+
+export default module;

@@ -1,6 +1,6 @@
 /// This file contains Vuex logic for the PomodoroSettings component
 
-export const initialState = {
+const initialState = {
   workTime: 25,
   breakTime: 5,
   longBreakTime: 15,
@@ -8,7 +8,7 @@ export const initialState = {
   autoStartNextSession: true
 };
 
-export const mutations = {
+const mutations = {
   setWorkTime(state, payload) {
     state.workTime = payload;
   },
@@ -26,6 +26,15 @@ export const mutations = {
   }
 };
 
-export const actions = {};
+const actions = {};
 
-export const getters = {};
+const getters = {};
+
+const module = {
+  state: initialState,
+  mutations: mutations,
+  actions: actions,
+  getters: getters
+};
+
+export default module;

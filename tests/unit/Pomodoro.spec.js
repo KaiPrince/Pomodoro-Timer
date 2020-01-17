@@ -4,21 +4,42 @@ import PomodoroComponent from "@/components/Pomodoro.vue";
 import { fireEvent } from "@testing-library/vue";
 import { expect } from "chai";
 import Vue from "vue";
-import { constants } from "../../src/store/Pomodoro";
+import PomodoroModuleInitial, {
+  constants
+} from "../../src/store/modules/Pomodoro";
+import PomodoroSettingsModuleInitial from "../../src/store/modules/PomodoroSettings";
 import { renderComponent } from "../_utils";
 
 describe("Pomodoro", function() {
-  const store = {
-    state: {
-      workTime: 30,
-      breakTime: 5,
-      longBreakTime: 15,
-      stage: constants.WORK_STAGE
+  const createInitialState = (
+    pomodoroState = {},
+    pomodoroSettingsState = {}
+  ) => ({
+    Pomodoro: {
+      namespaced: true,
+      ...PomodoroModuleInitial,
+      state: {
+        ...PomodoroModuleInitial.state,
+        ...pomodoroState
+      }
+    },
+    PomodoroSettings: {
+      namespaced: true,
+      ...PomodoroSettingsModuleInitial,
+      state: {
+        ...PomodoroSettingsModuleInitial.state,
+        ...pomodoroSettingsState
+      }
     }
-  };
-  const renderPomodoroComponent = function(customState = {}) {
+  });
+
+  const state = createInitialState(
+    { stage: constants.WORK_STAGE },
+    { workTime: 30, breakTime: 5, longBreakTime: 15 }
+  );
+
+  const renderPomodoroComponent = function(customState = state) {
     return renderComponent(PomodoroComponent, {
-      ...store.state,
       ...customState
     });
   };
@@ -47,9 +68,14 @@ describe("Pomodoro", function() {
 
   it("Advances to work stage after a break stage", async function() {
     // Arrange
-    const { getByTestId, getByText } = renderPomodoroComponent({
-      stage: constants.BREAK_STAGE
-    });
+    const { getByTestId, getByText } = renderPomodoroComponent(
+      createInitialState(
+        {
+          stage: constants.BREAK_STAGE
+        },
+        { workTime: 30, breakTime: 5, longBreakTime: 15 }
+      )
+    );
 
     const startButton = getByText(/Start/i).closest("button");
     fireEvent.click(startButton);
@@ -76,6 +102,7 @@ describe("Pomodoro", function() {
     const timerDisplay = getByTestId("timer-display");
 
     const clickStartAndSkip = async function() {
+      console.log("before click start", timerDisplay.innerHTML);
       const startButton = getByText(/Start/i).closest("button");
 
       //..Click start
@@ -85,6 +112,7 @@ describe("Pomodoro", function() {
 
       const skipButton = getByText(/Skip/i).closest("button");
 
+      console.log("before click skip", timerDisplay.innerHTML);
       //..Click skip
       fireEvent.click(skipButton);
       await Vue.nextTick();

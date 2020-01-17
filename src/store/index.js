@@ -1,26 +1,16 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import {
-  initialState as PomodoroSettingsState,
-  mutations as PomodoroSettingsMutations,
-  actions as PomodoroSettingsActions,
-  getters as PomodoroSettingsGetters
-} from "./PomodoroSettings";
-import {
-  initialState as PomodoroState,
-  mutations as PomodoroMutations,
-  actions as PomodoroActions,
-  getters as PomodoroGetters
-} from "./Pomodoro";
+import PomodoroSettings from "./modules/PomodoroSettings";
+import Pomodoro from "./modules/Pomodoro";
 
 Vue.use(Vuex);
 
 export const appStore = {
-  state: { ...PomodoroSettingsState, ...PomodoroState },
-  mutations: { ...PomodoroSettingsMutations, ...PomodoroMutations },
-  actions: { ...PomodoroSettingsActions, ...PomodoroActions },
-  getters: { ...PomodoroSettingsGetters, ...PomodoroGetters },
-  modules: {}
+  modules: {
+    // All modules should have namespaced: true
+    PomodoroSettings: { namespaced: true, ...PomodoroSettings },
+    Pomodoro: { namespaced: true, ...Pomodoro }
+  }
 };
 
 export default new Vuex.Store(appStore);

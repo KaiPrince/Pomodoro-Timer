@@ -35,42 +35,42 @@ export default {
   computed: {
     workTime: {
       get() {
-        return this.$store.state.workTime;
+        return this.$store.state.PomodoroSettings.workTime;
       },
       set(value) {
-        this.$store.commit("setWorkTime", value);
+        this.$store.commit("PomodoroSettings/setWorkTime", value);
       }
     },
     breakTime: {
       get() {
-        return this.$store.state.breakTime;
+        return this.$store.state.PomodoroSettings.breakTime;
       },
       set(value) {
-        this.$store.commit("setBreakTime", value);
+        this.$store.commit("PomodoroSettings/setBreakTime", value);
       }
     },
     longBreakTime: {
       get() {
-        return this.$store.state.longBreakTime;
+        return this.$store.state.PomodoroSettings.longBreakTime;
       },
       set(value) {
-        this.$store.commit("setLongBreakTime", value);
+        this.$store.commit("PomodoroSettings/setLongBreakTime", value);
       }
     },
     autoStartBreak: {
       get() {
-        return this.$store.state.autoStartBreak;
+        return this.$store.state.PomodoroSettings.autoStartBreak;
       },
       set(value) {
-        this.$store.commit("setAutoStartBreak", value);
+        this.$store.commit("PomodoroSettings/setAutoStartBreak", value);
       }
     },
     autoStartNextSession: {
       get() {
-        return this.$store.state.autoStartNextSession;
+        return this.$store.state.PomodoroSettings.autoStartNextSession;
       },
       set(value) {
-        this.$store.commit("setAutoStartNextSession", value);
+        this.$store.commit("PomodoroSettings/setAutoStartNextSession", value);
       }
     }
   }
