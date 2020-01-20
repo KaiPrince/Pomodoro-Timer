@@ -141,7 +141,7 @@ describe("Pomodoro", function() {
   });
 
   // This test is broken
-  it.skip("Autostarts the next session", async function() {
+  it("Autostarts the next session", async function() {
     // Arrange
     const { getByTestId, getByText } = renderPomodoroComponent(
       createInitialState(
@@ -159,20 +159,14 @@ describe("Pomodoro", function() {
     const clickStartAndSkip = async function() {
       const startButton = getByText(/Start/i).closest("button");
 
-      const timerDisplay = getByTestId("timer-display");
-      const timerDisplayValue = timerDisplay.innerHTML;
-      console.log("before click start", timerDisplayValue);
-
       //..Click start
-      fireEvent.click(startButton);
+      await fireEvent.click(startButton);
       await Vue.nextTick();
 
       const skipButton = getByText(/Skip/i).closest("button");
 
-      console.log("before click skip", timerDisplayValue);
-
       //..Click skip
-      fireEvent.click(skipButton);
+      await fireEvent.click(skipButton);
       await Vue.nextTick();
     };
 
@@ -190,10 +184,49 @@ describe("Pomodoro", function() {
     const timerDisplay = getByTestId("timer-display");
     const timerDisplayValue = timerDisplay.innerHTML;
 
-    expect(timerDisplayValue).to.equal("30:00");
     await sleep(1001);
     expect(timerDisplayValue).to.equal("29:59");
   });
 
-  it("Autostarts the break");
+  it("Autostarts the break", async function() {
+    // Arrange
+    const { getByTestId, getByText } = renderPomodoroComponent(
+      createInitialState(
+        {
+          stage: constants.WORK_STAGE
+        },
+        {
+          workTime: 30,
+          breakTime: 5,
+          longBreakTime: 15,
+          autoStartBreak: true
+        }
+      )
+    );
+    const clickStartAndSkip = async function() {
+      const startButton = getByText(/Start/i).closest("button");
+
+      //..Click start
+      await fireEvent.click(startButton);
+      await Vue.nextTick();
+
+      const skipButton = getByText(/Skip/i).closest("button");
+
+      //..Click skip
+      await fireEvent.click(skipButton);
+      await Vue.nextTick();
+    };
+
+    // Act
+    //..Work Stage
+    await clickStartAndSkip();
+
+    // Assert
+    const timerDisplay = getByTestId("timer-display");
+    const timerDisplayValue = timerDisplay.innerHTML;
+
+    //..Break Stage
+    await sleep(1001);
+    expect(timerDisplayValue).to.equal("4:59");
+  });
 });
