@@ -75,7 +75,6 @@ export default {
       this.showSettings = !this.showSettings;
     },
     onTimerElapsed() {
-      this.incrementCycles();
       if (this.isWorkStage) {
         if (this.countCycles >= 3) {
           this.resetCycles();
@@ -84,8 +83,10 @@ export default {
           this.breakStage();
         }
       } else if (this.isBreakStage) {
+        this.incrementCycles();
         this.workStage();
       } else if (this.isLongBreakStage) {
+        this.incrementCycles();
         this.workStage();
       } else {
         console.error("Unkown stage:", this.$store.state.stage);
