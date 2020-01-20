@@ -8,7 +8,7 @@ import PomodoroModuleInitial, {
   constants
 } from "../../src/store/modules/Pomodoro";
 import PomodoroSettingsModuleInitial from "../../src/store/modules/PomodoroSettings";
-import { renderComponent } from "../_utils";
+import { renderComponent, sleep } from "../_utils";
 
 describe("Pomodoro", function() {
   let createInitialState;
@@ -139,4 +139,61 @@ describe("Pomodoro", function() {
     //..Should be long break
     expect(timerDisplayValue).to.equal("15:00");
   });
+
+  // This test is broken
+  it.skip("Autostarts the next session", async function() {
+    // Arrange
+    const { getByTestId, getByText } = renderPomodoroComponent(
+      createInitialState(
+        {
+          stage: constants.WORK_STAGE
+        },
+        {
+          workTime: 30,
+          breakTime: 5,
+          longBreakTime: 15,
+          autoStartNextSession: true
+        }
+      )
+    );
+    const clickStartAndSkip = async function() {
+      const startButton = getByText(/Start/i).closest("button");
+
+      const timerDisplay = getByTestId("timer-display");
+      const timerDisplayValue = timerDisplay.innerHTML;
+      console.log("before click start", timerDisplayValue);
+
+      //..Click start
+      fireEvent.click(startButton);
+      await Vue.nextTick();
+
+      const skipButton = getByText(/Skip/i).closest("button");
+
+      console.log("before click skip", timerDisplayValue);
+
+      //..Click skip
+      fireEvent.click(skipButton);
+      await Vue.nextTick();
+    };
+
+    const skipOneCycle = async function() {
+      //..Work Stage
+      await clickStartAndSkip();
+      //..Break Stage
+      await clickStartAndSkip();
+    };
+
+    // Act
+    await skipOneCycle();
+
+    // Assert
+    const timerDisplay = getByTestId("timer-display");
+    const timerDisplayValue = timerDisplay.innerHTML;
+
+    expect(timerDisplayValue).to.equal("30:00");
+    await sleep(1001);
+    expect(timerDisplayValue).to.equal("29:59");
+  });
+
+  it("Autostarts the break");
 });

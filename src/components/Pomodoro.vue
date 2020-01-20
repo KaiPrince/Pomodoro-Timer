@@ -8,6 +8,7 @@
           <timer
             :initial-countdown-in-minutes="countdownInMinutes"
             :on-elapsed="onTimerElapsed"
+            :auto-start="autoStartTimer"
           />
           <br />
           <v-btn @click="toggleShowSettings">Show Settings</v-btn>
@@ -33,7 +34,7 @@ export default {
   },
   props: {},
   data() {
-    return { showSettings: false };
+    return { showSettings: false, firstRun: true };
   },
   computed: {
     countdownInMinutes() {
@@ -48,13 +49,26 @@ export default {
         return 0;
       }
     },
+    autoStartTimer() {
+      if (!this.firstRun && this.isWorkStage && this.autoStartNextSession) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     ...mapGetters("Pomodoro", [
       "isWorkStage",
       "isBreakStage",
       "isLongBreakStage"
     ]),
+    // Using mapState to avoid creating empty getters.
     ...mapState("Pomodoro", ["countCycles"]),
-    ...mapState("PomodoroSettings", ["workTime", "breakTime", "longBreakTime"])
+    ...mapState("PomodoroSettings", [
+      "workTime",
+      "breakTime",
+      "longBreakTime",
+      "autoStartNextSession"
+    ])
   },
   methods: {
     toggleShowSettings() {
@@ -76,6 +90,8 @@ export default {
       } else {
         console.error("Unkown stage:", this.$store.state.stage);
       }
+
+      this.firstRun = false;
     },
     ...mapActions("Pomodoro", [
       "breakStage",

@@ -26,6 +26,10 @@ export default {
       type: Number,
       default: 0
     },
+    autoStart: {
+      type: Boolean,
+      default: false
+    },
     onElapsed: {
       type: Function,
       default: () => {}
@@ -35,7 +39,7 @@ export default {
     return {
       tickTimer: "",
       timeRemaining: getTimeFromMinutes(this.initialCountdownInMinutes),
-      timerRunning: false,
+      timerRunning: this.autoStart,
       elapsed: false
     };
   },
@@ -57,6 +61,11 @@ export default {
   watch: {
     initialCountdownInMinutes: function(newValue) {
       this.timeRemaining = getTimeFromMinutes(newValue);
+    },
+    autoStart: function(now, was) {
+      if (now == true && was == false) {
+        this.timerRunning = true;
+      }
     }
   },
   created() {

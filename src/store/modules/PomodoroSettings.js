@@ -5,7 +5,7 @@ const initialState = {
   breakTime: 5,
   longBreakTime: 15,
   autoStartBreak: true,
-  autoStartNextSession: true
+  autoStartNextSession: false
 };
 
 const mutations = {
