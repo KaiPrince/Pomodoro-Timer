@@ -180,11 +180,12 @@ describe("Pomodoro", function() {
     // Act
     await skipOneCycle();
 
+    await sleep(1001);
+
     // Assert
+
     const timerDisplay = getByTestId("timer-display");
     const timerDisplayValue = timerDisplay.innerHTML;
-
-    await sleep(1001);
     expect(timerDisplayValue).to.equal("29:59");
   });
 
@@ -221,12 +222,12 @@ describe("Pomodoro", function() {
     //..Work Stage
     await clickStartAndSkip();
 
+    await sleep(1001);
+
     // Assert
+    //..Break Stage
     const timerDisplay = getByTestId("timer-display");
     const timerDisplayValue = timerDisplay.innerHTML;
-
-    //..Break Stage
-    await sleep(1001);
-    expect(timerDisplayValue).to.equal("4:59");
+    expect(timerDisplayValue).to.equal("04:59");
   });
 });

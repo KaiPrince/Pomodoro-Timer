@@ -4,7 +4,7 @@ const initialState = {
   workTime: 25,
   breakTime: 5,
   longBreakTime: 15,
-  autoStartBreak: true,
+  autoStartBreak: false,
   autoStartNextSession: false
 };
 

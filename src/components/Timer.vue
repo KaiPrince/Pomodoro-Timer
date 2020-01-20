@@ -61,6 +61,10 @@ export default {
   watch: {
     initialCountdownInMinutes: function(newValue) {
       this.timeRemaining = getTimeFromMinutes(newValue);
+
+      if (this.autoStart) {
+        this.timerRunning = true;
+      }
     },
     autoStart: function(now, was) {
       if (now == true && was == false) {

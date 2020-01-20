@@ -50,7 +50,13 @@ export default {
       }
     },
     autoStartTimer() {
-      if (!this.firstRun && this.isWorkStage && this.autoStartNextSession) {
+      if (this.firstRun) return false;
+
+      if (this.isWorkStage && this.autoStartNextSession) {
+        return true;
+      } else if (this.isBreakStage && this.autoStartBreak) {
+        return true;
+      } else if (this.isLongBreakStage && this.autoStartBreak) {
         return true;
       } else {
         return false;
@@ -67,7 +73,8 @@ export default {
       "workTime",
       "breakTime",
       "longBreakTime",
-      "autoStartNextSession"
+      "autoStartNextSession",
+      "autoStartBreak"
     ])
   },
   methods: {
