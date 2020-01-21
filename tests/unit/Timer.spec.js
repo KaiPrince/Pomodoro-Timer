@@ -191,4 +191,34 @@ describe("Timer", () => {
       { timeout: 10 }
     );
   });
+
+  it("Counts up", async function() {
+    // Arrange
+    const { getByText, getByTestId } = render(TimerComponent, {
+      props: {
+        initialCountdown: 25,
+        countUpwards: true
+      }
+    });
+
+    const startButton = getByText(/Start/i).closest("button");
+    const timerDisplay = getByTestId("timer-display");
+
+    const initialTimerDisplayValue = timerDisplay.innerHTML;
+
+    expect(initialTimerDisplayValue).to.equal("00:00");
+
+    // Act
+    fireEvent.click(startButton);
+    await Vue.nextTick();
+
+    // Assert
+    await wait(
+      () => {
+        const nextTimerDisplayValue = timerDisplay.innerHTML;
+        expect(nextTimerDisplayValue).to.equal("00:01");
+      },
+      { timeout: 1001 }
+    );
+  });
 });
