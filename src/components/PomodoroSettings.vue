@@ -19,7 +19,8 @@
         v-model="autoStartNextSession"
         label="Auto Start Next Session"
       />
-      <v-checkbox v-model="countUpwards" label="Count Upwards" />
+      <v-checkbox v-model="countUpwards" label="Count Upwards Work" />
+      <v-checkbox v-model="countUpwardsBreak" label="Count Upwards Break" />
     </v-form>
   </div>
 </template>
@@ -80,6 +81,14 @@ export default {
       },
       set(value) {
         this.$store.commit("PomodoroSettings/setCountUpwards", value);
+      }
+    },
+    countUpwardsBreak: {
+      get() {
+        return this.$store.state.PomodoroSettings.countUpwardsBreak;
+      },
+      set(value) {
+        this.$store.commit("PomodoroSettings/setCountUpwardsBreak", value);
       }
     }
   }

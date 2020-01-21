@@ -6,7 +6,8 @@ const initialState = {
   longBreakTime: 15,
   autoStartBreak: false,
   autoStartNextSession: false,
-  countUpwards: false
+  countUpwards: false,
+  countUpwardsBreak: false
 };
 
 const mutations = {
@@ -27,6 +28,9 @@ const mutations = {
   },
   setCountUpwards(state, payload) {
     state.countUpwards = payload;
+  },
+  setCountUpwardsBreak(state, payload) {
+    state.countUpwardsBreak = payload;
   }
 };
 
