@@ -34,6 +34,10 @@ export default {
     onElapsed: {
       type: Function,
       default: () => {}
+    },
+    countUpwards: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -46,11 +50,21 @@ export default {
   },
   computed: {
     timerDisplay: function() {
+      let timeValue;
+
+      // Invert value if counting up.
+      if (this.countUpwards) {
+        const invertedValue =
+          getTimeFromMinutes(this.value) - this.timeRemaining;
+
+        timeValue = invertedValue;
+      } else {
+        timeValue = this.timeRemaining;
+      }
+
       // Get minutes and seconds using "math stuff".
-      const minutes = Math.floor(
-        (this.timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-      );
-      const seconds = Math.floor((this.timeRemaining % (1000 * 60)) / 1000);
+      const minutes = Math.floor((timeValue % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeValue % (1000 * 60)) / 1000);
 
       // Format display string.
       const minutesString = minutes <= 9 ? "0" + minutes : minutes;
