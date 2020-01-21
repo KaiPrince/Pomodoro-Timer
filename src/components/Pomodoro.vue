@@ -6,7 +6,7 @@
       <v-row>
         <v-col>
           <timer
-            :value="countdownInMinutes"
+            :initial-value="countdownInMinutes"
             :on-elapsed="onTimerElapsed"
             :auto-start="autoStartTimer"
           />
