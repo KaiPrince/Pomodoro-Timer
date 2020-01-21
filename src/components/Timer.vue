@@ -22,8 +22,8 @@ function getTimeFromMinutes(minutes) {
 export default {
   name: "Timer",
   props: {
-    initialCountdown: {
-      // In minutes.
+    value: {
+      // Initial countdown in minutes.
       type: Number,
       default: 0
     },
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       tickTimer: "",
-      timeRemaining: getTimeFromMinutes(this.initialCountdown),
+      timeRemaining: getTimeFromMinutes(this.value),
       timerRunning: this.autoStart,
       elapsed: false
     };
@@ -60,7 +60,7 @@ export default {
     }
   },
   watch: {
-    initialCountdown: function(newValue) {
+    value: function(newValue) {
       this.timeRemaining = getTimeFromMinutes(newValue);
 
       if (this.autoStart) {
@@ -136,7 +136,7 @@ export default {
       this.onElapsed();
     },
     setTimerToInitialValue() {
-      this.timeRemaining = getTimeFromMinutes(this.initialCountdown);
+      this.timeRemaining = getTimeFromMinutes(this.value);
     }
   }
 };

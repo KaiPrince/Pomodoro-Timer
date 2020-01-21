@@ -12,7 +12,7 @@ describe("Timer", () => {
   const renderTimerComponent = function(minutes = 25) {
     return render(TimerComponent, {
       props: {
-        initialCountdown: minutes
+        value: minutes
       }
     });
   };
@@ -196,7 +196,7 @@ describe("Timer", () => {
     // Arrange
     const { getByText, getByTestId } = render(TimerComponent, {
       props: {
-        initialCountdown: 25,
+        value: 25,
         countUpwards: true
       }
     });
