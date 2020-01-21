@@ -1,4 +1,5 @@
 /// This file contains unit tests for the Pomodoro component
+// @ts-nocheck
 
 import PomodoroComponent from "@/components/Pomodoro.vue";
 import { fireEvent, wait } from "@testing-library/vue";

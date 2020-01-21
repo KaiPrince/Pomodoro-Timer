@@ -1,4 +1,5 @@
 /// This file contains unit tests for the Timer component.
+// @ts-nocheck
 
 import { render, fireEvent, wait } from "@testing-library/vue";
 import TimerComponent from "@/components/Timer.vue";

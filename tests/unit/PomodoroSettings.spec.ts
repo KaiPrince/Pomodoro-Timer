@@ -1,4 +1,5 @@
 /// This file contains unit tests for the PomodoroSettings component.
+// @ts-nocheck
 
 import PomodoroSettings from "@/components/PomodoroSettings.vue";
 import { render } from "@testing-library/vue";
