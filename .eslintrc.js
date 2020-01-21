@@ -11,7 +11,7 @@ module.exports = {
   },
 
   parserOptions: {
-    parser: "babel-eslint"
+    parser: "@typescript-eslint/parser"
   },
 
   overrides: [
@@ -23,5 +23,10 @@ module.exports = {
     }
   ],
 
-  extends: ["plugin:vue/recommended", "@vue/prettier", "plugin:vue/essential"]
+  extends: [
+    "plugin:vue/recommended",
+    "@vue/prettier",
+    "plugin:vue/essential",
+    "@vue/typescript"
+  ]
 };
