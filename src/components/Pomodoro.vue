@@ -6,9 +6,10 @@
       <v-row>
         <v-col>
           <timer
-            :initial-countdown-in-minutes="countdownInMinutes"
+            :initial-value="countdownInMinutes"
             :on-elapsed="onTimerElapsed"
             :auto-start="autoStartTimer"
+            :count-upwards="countUpwardsTimer"
           />
           <br />
           <v-btn @click="toggleShowSettings">Show Settings</v-btn>
@@ -62,6 +63,17 @@ export default {
         return false;
       }
     },
+    countUpwardsTimer() {
+      if (this.isWorkStage && this.countUpwards) {
+        return true;
+      } else if (this.isBreakStage && this.countUpwardsBreak) {
+        return true;
+      } else if (this.isLongBreakStage && this.countUpwardsBreak) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     ...mapGetters("Pomodoro", [
       "isWorkStage",
       "isBreakStage",
@@ -74,7 +86,9 @@ export default {
       "breakTime",
       "longBreakTime",
       "autoStartNextSession",
-      "autoStartBreak"
+      "autoStartBreak",
+      "countUpwards",
+      "countUpwardsBreak"
     ])
   },
   methods: {

@@ -1,7 +1,7 @@
 /// This file contains unit tests for the Pomodoro component
 
 import PomodoroComponent from "@/components/Pomodoro.vue";
-import { fireEvent } from "@testing-library/vue";
+import { fireEvent, wait } from "@testing-library/vue";
 import { expect } from "chai";
 import Vue from "vue";
 import PomodoroModuleInitial, {
@@ -229,5 +229,107 @@ describe("Pomodoro", function() {
     const timerDisplay = getByTestId("timer-display");
     const timerDisplayValue = timerDisplay.innerHTML;
     expect(timerDisplayValue).to.equal("04:59");
+  });
+
+  it("Counts up", async function() {
+    // Arrange
+    const { getByTestId, getByText } = renderPomodoroComponent(
+      createInitialState(
+        {
+          stage: constants.WORK_STAGE
+        },
+        {
+          workTime: 30,
+          breakTime: 5,
+          longBreakTime: 15,
+          countUpwards: true
+        }
+      )
+    );
+
+    // Act
+    const startButton = getByText(/Start/i).closest("button");
+
+    //..Click start
+    await fireEvent.click(startButton);
+
+    // Assert
+    const timerDisplay = getByTestId("timer-display");
+
+    await wait(
+      () => {
+        const timerDisplayValue = timerDisplay.innerHTML;
+        expect(timerDisplayValue).to.equal("00:01");
+      },
+      { timeout: 1001 }
+    );
+  });
+
+  it("Counts up on break stage", async function() {
+    // Arrange
+    const { getByTestId, getByText } = renderPomodoroComponent(
+      createInitialState(
+        {
+          stage: constants.BREAK_STAGE
+        },
+        {
+          workTime: 30,
+          breakTime: 5,
+          longBreakTime: 15,
+          countUpwardsBreak: true
+        }
+      )
+    );
+
+    // Act
+    const startButton = getByText(/Start/i).closest("button");
+
+    //..Click start
+    await fireEvent.click(startButton);
+
+    // Assert
+    const timerDisplay = getByTestId("timer-display");
+
+    await wait(
+      () => {
+        const timerDisplayValue = timerDisplay.innerHTML;
+        expect(timerDisplayValue).to.equal("00:01");
+      },
+      { timeout: 1001 }
+    );
+  });
+
+  it("Counts upon long break stage", async function() {
+    // Arrange
+    const { getByTestId, getByText } = renderPomodoroComponent(
+      createInitialState(
+        {
+          stage: constants.LONG_BREAK_STAGE
+        },
+        {
+          workTime: 30,
+          breakTime: 5,
+          longBreakTime: 15,
+          countUpwardsBreak: true
+        }
+      )
+    );
+
+    // Act
+    const startButton = getByText(/Start/i).closest("button");
+
+    //..Click start
+    await fireEvent.click(startButton);
+
+    // Assert
+    const timerDisplay = getByTestId("timer-display");
+
+    await wait(
+      () => {
+        const timerDisplayValue = timerDisplay.innerHTML;
+        expect(timerDisplayValue).to.equal("00:01");
+      },
+      { timeout: 1001 }
+    );
   });
 });
