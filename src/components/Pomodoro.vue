@@ -9,6 +9,7 @@
             :initial-value="countdownInMinutes"
             :on-elapsed="onTimerElapsed"
             :auto-start="autoStartTimer"
+            :count-upwards="countUpwards"
           />
           <br />
           <v-btn @click="toggleShowSettings">Show Settings</v-btn>
@@ -74,7 +75,8 @@ export default {
       "breakTime",
       "longBreakTime",
       "autoStartNextSession",
-      "autoStartBreak"
+      "autoStartBreak",
+      "countUpwards"
     ])
   },
   methods: {

@@ -19,6 +19,7 @@
         v-model="autoStartNextSession"
         label="Auto Start Next Session"
       />
+      <v-checkbox v-model="countUpwards" label="Count Upwards" />
     </v-form>
   </div>
 </template>
@@ -71,6 +72,14 @@ export default {
       },
       set(value) {
         this.$store.commit("PomodoroSettings/setAutoStartNextSession", value);
+      }
+    },
+    countUpwards: {
+      get() {
+        return this.$store.state.PomodoroSettings.countUpwards;
+      },
+      set(value) {
+        this.$store.commit("PomodoroSettings/setCountUpwards", value);
       }
     }
   }
