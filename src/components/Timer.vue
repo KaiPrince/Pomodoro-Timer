@@ -22,7 +22,8 @@ function getTimeFromMinutes(minutes) {
 export default {
   name: "Timer",
   props: {
-    initialCountdownInMinutes: {
+    initialValue: {
+      // Initial countdown in minutes.
       type: Number,
       default: 0
     },
@@ -33,23 +34,37 @@ export default {
     onElapsed: {
       type: Function,
       default: () => {}
+    },
+    countUpwards: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       tickTimer: "",
-      timeRemaining: getTimeFromMinutes(this.initialCountdownInMinutes),
+      timeRemaining: getTimeFromMinutes(this.initialValue),
       timerRunning: this.autoStart,
       elapsed: false
     };
   },
   computed: {
     timerDisplay: function() {
+      let timeValue;
+
+      // Invert value if counting up.
+      if (this.countUpwards) {
+        const invertedValue =
+          getTimeFromMinutes(this.initialValue) - this.timeRemaining;
+
+        timeValue = invertedValue;
+      } else {
+        timeValue = this.timeRemaining;
+      }
+
       // Get minutes and seconds using "math stuff".
-      const minutes = Math.floor(
-        (this.timeRemaining % (1000 * 60 * 60)) / (1000 * 60)
-      );
-      const seconds = Math.floor((this.timeRemaining % (1000 * 60)) / 1000);
+      const minutes = Math.floor((timeValue % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeValue % (1000 * 60)) / 1000);
 
       // Format display string.
       const minutesString = minutes <= 9 ? "0" + minutes : minutes;
@@ -59,7 +74,7 @@ export default {
     }
   },
   watch: {
-    initialCountdownInMinutes: function(newValue) {
+    initialValue: function(newValue) {
       this.timeRemaining = getTimeFromMinutes(newValue);
 
       if (this.autoStart) {
@@ -135,7 +150,7 @@ export default {
       this.onElapsed();
     },
     setTimerToInitialValue() {
-      this.timeRemaining = getTimeFromMinutes(this.initialCountdownInMinutes);
+      this.timeRemaining = getTimeFromMinutes(this.initialValue);
     }
   }
 };
