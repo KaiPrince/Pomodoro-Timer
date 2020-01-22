@@ -10,6 +10,7 @@
             :on-elapsed="onTimerElapsed"
             :auto-start="autoStartTimer"
             :count-upwards="countUpwardsTimer"
+            :color="timerDisplayColor"
           />
           <br />
           <v-btn @click="toggleShowSettings">Show Settings</v-btn>
@@ -72,6 +73,13 @@ export default {
         return true;
       } else {
         return false;
+      }
+    },
+    timerDisplayColor() {
+      if (this.isWorkStage) {
+        return "deep-orange";
+      } else {
+        return "success";
       }
     },
     ...mapGetters("Pomodoro", [

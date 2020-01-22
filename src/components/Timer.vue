@@ -9,7 +9,7 @@
         size="100"
         rotate="270"
         width="15"
-        color="success"
+        :color="color"
       >
         <span data-testid="timer-display">{{ timerDisplay }}</span>
       </v-progress-circular>
@@ -48,6 +48,10 @@ export default {
     countUpwards: {
       type: Boolean,
       default: false
+    },
+    color: {
+      type: String,
+      default: undefined
     }
   },
   data() {
