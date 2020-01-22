@@ -3,6 +3,7 @@
 
 <template>
   <div>
+    <v-progress-circular size="100" rotate="270" :value="timerProgress" />
     <p data-testid="timer-display">{{ timerDisplay }}</p>
     <v-btn @click="onClickStartStop">
       {{ !timerRunning ? "Start" : "Pause" }}
@@ -49,13 +50,15 @@ export default {
     };
   },
   computed: {
+    initialTimeRemaining: function() {
+      return getTimeFromMinutes(this.initialValue);
+    },
     timerDisplay: function() {
       let timeValue;
 
       // Invert value if counting up.
       if (this.countUpwards) {
-        const invertedValue =
-          getTimeFromMinutes(this.initialValue) - this.timeRemaining;
+        const invertedValue = this.initialTimeRemaining - this.timeRemaining;
 
         timeValue = invertedValue;
       } else {
@@ -71,6 +74,14 @@ export default {
       const secondsString = seconds <= 9 ? "0" + seconds : seconds;
 
       return `${minutesString}:${secondsString}`;
+    },
+    timerProgress: function() {
+      // Catch divide by zero
+      if (!this.initialTimeRemaining) {
+        return 0;
+      }
+
+      return (this.timeRemaining / this.initialTimeRemaining) * 100;
     }
   },
   watch: {
@@ -124,7 +135,7 @@ export default {
     },
     onClickStart() {
       if (this.elapsed) {
-        this.setTimerToInitialValue();
+        this.timeRemaining = this.initialTimeRemaining;
         this.elapsed = false;
       }
       this.timerRunning = true;
@@ -133,7 +144,7 @@ export default {
       this.timerRunning = false;
     },
     onClickReset() {
-      this.setTimerToInitialValue();
+      this.timeRemaining = this.initialTimeRemaining;
       this.timerRunning = false;
     },
     onClickSkip() {
@@ -148,9 +159,6 @@ export default {
 
       // Trigger onElapsed Callback
       this.onElapsed();
-    },
-    setTimerToInitialValue() {
-      this.timeRemaining = getTimeFromMinutes(this.initialValue);
     }
   }
 };
