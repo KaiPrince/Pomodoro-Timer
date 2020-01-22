@@ -125,26 +125,15 @@ export default {
         } else {
           this.breakStage();
         }
-      } else if (this.isBreakStage) {
-        // Display a notification on the browser
-        if (Notification.permission == "granted") {
-          new Notification("Time for work!");
-        }
-
-        // Set cycles and stage
-        this.incrementCycles();
-        this.workStage();
-      } else if (this.isLongBreakStage) {
-        // Display a notification on the browser
-        if (Notification.permission == "granted") {
-          new Notification("Time for work!");
-        }
-
-        // Set cycles and stage
-        this.incrementCycles();
-        this.workStage();
       } else {
-        console.error("Unkown stage:", this.$store.state.stage);
+        // Display a notification on the browser
+        if (Notification.permission == "granted") {
+          new Notification("Time for work!");
+        }
+
+        // Set cycles and stage
+        this.incrementCycles();
+        this.workStage();
       }
 
       this.firstRun = false;
