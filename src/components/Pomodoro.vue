@@ -15,7 +15,9 @@
     </v-row>
     <v-row justify="center">
       <v-col cols="auto">
-        <v-btn @click="toggleShowSettings">Show Settings</v-btn>
+        <v-btn @click="toggleShowSettings">{{
+          !showSettings ? "Show Settings" : "Hide Settings"
+        }}</v-btn>
       </v-col>
     </v-row>
     <v-row>
