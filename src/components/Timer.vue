@@ -23,7 +23,11 @@
         <v-btn @click="onClickStartStop">
           {{ !timerRunning ? "Start" : "Pause" }}
         </v-btn>
+      </v-col>
+      <v-col v-if="timerRunning">
         <v-btn v-if="timerRunning" @click="onClickSkip">Skip</v-btn>
+      </v-col>
+      <v-col v-if="timerRunning">
         <v-btn v-if="timerRunning" @click="onClickReset">Reset</v-btn>
       </v-col>
     </v-row>
