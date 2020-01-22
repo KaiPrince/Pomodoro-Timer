@@ -41,6 +41,7 @@ export default {
   data() {
     return { showSettings: false, firstRun: true };
   },
+
   computed: {
     countdownInMinutes() {
       if (this.isWorkStage) {
@@ -102,26 +103,37 @@ export default {
       "countUpwardsBreak"
     ])
   },
+  created() {
+    // Request notification permission
+    Notification.requestPermission();
+  },
   methods: {
     toggleShowSettings() {
       this.showSettings = !this.showSettings;
     },
     onTimerElapsed() {
       if (this.isWorkStage) {
+        // Display a notification on the browser
+        if (Notification.permission == "granted") {
+          new Notification("Time for a break!");
+        }
+
+        // Set cycles and stage
         if (this.countCycles >= 3) {
           this.resetCycles();
           this.longBreakStage();
         } else {
           this.breakStage();
         }
-      } else if (this.isBreakStage) {
-        this.incrementCycles();
-        this.workStage();
-      } else if (this.isLongBreakStage) {
-        this.incrementCycles();
-        this.workStage();
       } else {
-        console.error("Unkown stage:", this.$store.state.stage);
+        // Display a notification on the browser
+        if (Notification.permission == "granted") {
+          new Notification("Time for work!");
+        }
+
+        // Set cycles and stage
+        this.incrementCycles();
+        this.workStage();
       }
 
       this.firstRun = false;
