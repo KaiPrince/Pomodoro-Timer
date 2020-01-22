@@ -41,6 +41,11 @@ export default {
   data() {
     return { showSettings: false, firstRun: true };
   },
+  created() {
+    // Request notification permission
+
+    Notification.requestPermission();
+  },
   computed: {
     countdownInMinutes() {
       if (this.isWorkStage) {
@@ -108,6 +113,12 @@ export default {
     },
     onTimerElapsed() {
       if (this.isWorkStage) {
+        // Display a notification on the browser
+        if (Notification.permission == "granted") {
+          new Notification("Time for a break!");
+        }
+
+        // Set cycles and stage
         if (this.countCycles >= 3) {
           this.resetCycles();
           this.longBreakStage();
@@ -115,9 +126,21 @@ export default {
           this.breakStage();
         }
       } else if (this.isBreakStage) {
+        // Display a notification on the browser
+        if (Notification.permission == "granted") {
+          new Notification("Time for work!");
+        }
+
+        // Set cycles and stage
         this.incrementCycles();
         this.workStage();
       } else if (this.isLongBreakStage) {
+        // Display a notification on the browser
+        if (Notification.permission == "granted") {
+          new Notification("Time for work!");
+        }
+
+        // Set cycles and stage
         this.incrementCycles();
         this.workStage();
       } else {
