@@ -51,7 +51,7 @@ export default {
       } else if (this.isLongBreakStage) {
         return this.longBreakTime;
       } else {
-        console.error("Unknown stage:", this.$store.state.stage);
+        // Unknown stage
         return 0;
       }
     },
