@@ -81,7 +81,15 @@ export default {
         return 0;
       }
 
-      return (this.timeRemaining / this.initialTimeRemaining) * 100;
+      const progressPercentage =
+        (this.timeRemaining / this.initialTimeRemaining) * 100;
+      // Invert value if counting up.
+      if (this.countUpwards) {
+        const invertedValue = 100 - progressPercentage;
+        return invertedValue;
+      } else {
+        return progressPercentage;
+      }
     }
   },
   watch: {
