@@ -24,14 +24,14 @@ describe("Timer", () => {
     // Act
 
     // Assert
-    expect(getByText(/^Start$/i));
+    expect(getByText(/Start/i));
   });
 
   it("Shows a pause button", async function() {
     // Arrange
     const { getByText } = renderTimerComponent();
 
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
 
     fireEvent.click(startButton);
 
@@ -50,7 +50,7 @@ describe("Timer", () => {
     // Arrange
     const { getByText, getByTestId } = renderTimerComponent();
 
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
     fireEvent.click(startButton);
 
     await Vue.nextTick();
@@ -75,7 +75,7 @@ describe("Timer", () => {
     //..Start timer
     const { getByText, getByTestId } = renderTimerComponent(25);
 
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
     fireEvent.click(startButton);
 
     await Vue.nextTick();
@@ -104,7 +104,7 @@ describe("Timer", () => {
     //..Start timer
     const { getByText, getByTestId } = renderTimerComponent(25);
 
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
     fireEvent.click(startButton);
     await Vue.nextTick();
 
@@ -141,7 +141,7 @@ describe("Timer", () => {
       }
     });
 
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
     fireEvent.click(startButton);
 
     // Act
@@ -167,7 +167,7 @@ describe("Timer", () => {
       }
     });
 
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
     fireEvent.click(startButton);
 
     await Vue.nextTick();
@@ -201,7 +201,7 @@ describe("Timer", () => {
       }
     });
 
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
     const timerDisplay = getByTestId("timer-display");
 
     const initialTimerDisplayValue = timerDisplay.innerHTML;

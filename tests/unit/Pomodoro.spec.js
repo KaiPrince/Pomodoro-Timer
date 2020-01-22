@@ -51,7 +51,7 @@ describe("Pomodoro", function() {
     // Arrange
     const { getByTestId, getByText } = renderPomodoroComponent();
 
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
     fireEvent.click(startButton);
 
     await Vue.nextTick();
@@ -80,7 +80,7 @@ describe("Pomodoro", function() {
       )
     );
 
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
     fireEvent.click(startButton);
 
     await Vue.nextTick();
@@ -105,7 +105,7 @@ describe("Pomodoro", function() {
     const timerDisplay = getByTestId("timer-display");
 
     const clickStartAndSkip = async function() {
-      const startButton = getByText(/^Start$/i).closest("button");
+      const startButton = getByText(/Start/i).closest("button");
 
       //..Click start
       fireEvent.click(startButton);
@@ -157,7 +157,7 @@ describe("Pomodoro", function() {
       )
     );
     const clickStartAndSkip = async function() {
-      const startButton = getByText(/^Start$/i).closest("button");
+      const startButton = getByText(/Start/i).closest("button");
 
       //..Click start
       await fireEvent.click(startButton);
@@ -205,7 +205,7 @@ describe("Pomodoro", function() {
       )
     );
     const clickStartAndSkip = async function() {
-      const startButton = getByText(/^Start$/i).closest("button");
+      const startButton = getByText(/Start/i).closest("button");
 
       //..Click start
       await fireEvent.click(startButton);
@@ -248,7 +248,7 @@ describe("Pomodoro", function() {
     );
 
     // Act
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
 
     //..Click start
     await fireEvent.click(startButton);
@@ -282,7 +282,7 @@ describe("Pomodoro", function() {
     );
 
     // Act
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
 
     //..Click start
     await fireEvent.click(startButton);
@@ -316,7 +316,7 @@ describe("Pomodoro", function() {
     );
 
     // Act
-    const startButton = getByText(/^Start$/i).closest("button");
+    const startButton = getByText(/Start/i).closest("button");
 
     //..Click start
     await fireEvent.click(startButton);
