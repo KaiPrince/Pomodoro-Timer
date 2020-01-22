@@ -8,7 +8,7 @@
         :value="timerProgress"
         size="100"
         rotate="270"
-        width="15"
+        width="13"
         :color="color"
       >
         <span data-testid="timer-display">{{ timerDisplay }}</span>
