@@ -11,7 +11,10 @@
           :count-upwards="countUpwardsTimer"
           :color="timerDisplayColor"
         />
-        <br />
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="auto">
         <v-btn @click="toggleShowSettings">Show Settings</v-btn>
       </v-col>
     </v-row>
