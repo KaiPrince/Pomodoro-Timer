@@ -2,14 +2,36 @@
   given duration -->
 
 <template>
-  <div>
-    <p data-testid="timer-display">{{ timerDisplay }}</p>
-    <v-btn @click="onClickStartStop">
-      {{ !timerRunning ? "Start" : "Pause" }}
-    </v-btn>
-    <v-btn v-if="timerRunning" @click="onClickSkip">Skip</v-btn>
-    <v-btn v-if="timerRunning" @click="onClickReset">Reset</v-btn>
-  </div>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="auto">
+        <p>
+          <v-progress-circular
+            :value="timerProgress"
+            size="100"
+            rotate="270"
+            width="13"
+            :color="color"
+          >
+            <span data-testid="timer-display">{{ timerDisplay }}</span>
+          </v-progress-circular>
+        </p>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="auto">
+        <v-btn @click="onClickStartStop">
+          {{ !timerRunning ? "Start" : "Pause" }}
+        </v-btn>
+      </v-col>
+      <v-col v-if="timerRunning">
+        <v-btn v-if="timerRunning" @click="onClickSkip">Skip</v-btn>
+      </v-col>
+      <v-col v-if="timerRunning">
+        <v-btn v-if="timerRunning" @click="onClickReset">Reset</v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -38,6 +60,10 @@ export default {
     countUpwards: {
       type: Boolean,
       default: false
+    },
+    color: {
+      type: String,
+      default: undefined
     }
   },
   data() {
@@ -49,13 +75,15 @@ export default {
     };
   },
   computed: {
+    initialTimeRemaining: function() {
+      return getTimeFromMinutes(this.initialValue);
+    },
     timerDisplay: function() {
       let timeValue;
 
       // Invert value if counting up.
       if (this.countUpwards) {
-        const invertedValue =
-          getTimeFromMinutes(this.initialValue) - this.timeRemaining;
+        const invertedValue = this.initialTimeRemaining - this.timeRemaining;
 
         timeValue = invertedValue;
       } else {
@@ -71,6 +99,22 @@ export default {
       const secondsString = seconds <= 9 ? "0" + seconds : seconds;
 
       return `${minutesString}:${secondsString}`;
+    },
+    timerProgress: function() {
+      // Catch divide by zero
+      if (!this.initialTimeRemaining) {
+        return 0;
+      }
+
+      const progressPercentage =
+        (this.timeRemaining / this.initialTimeRemaining) * 100;
+      // Invert value if counting up.
+      if (this.countUpwards) {
+        const invertedValue = 100 - progressPercentage;
+        return invertedValue;
+      } else {
+        return progressPercentage;
+      }
     }
   },
   watch: {
@@ -124,7 +168,7 @@ export default {
     },
     onClickStart() {
       if (this.elapsed) {
-        this.setTimerToInitialValue();
+        this.timeRemaining = this.initialTimeRemaining;
         this.elapsed = false;
       }
       this.timerRunning = true;
@@ -133,7 +177,7 @@ export default {
       this.timerRunning = false;
     },
     onClickReset() {
-      this.setTimerToInitialValue();
+      this.timeRemaining = this.initialTimeRemaining;
       this.timerRunning = false;
     },
     onClickSkip() {
@@ -148,9 +192,6 @@ export default {
 
       // Trigger onElapsed Callback
       this.onElapsed();
-    },
-    setTimerToInitialValue() {
-      this.timeRemaining = getTimeFromMinutes(this.initialValue);
     }
   }
 };

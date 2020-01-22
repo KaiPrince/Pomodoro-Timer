@@ -1,25 +1,29 @@
 <!-- A Pomodoro with Timer, Start/Stop and Reset buttons. -->
 
 <template>
-  <div>
-    <v-container>
-      <v-row>
-        <v-col>
-          <timer
-            :initial-value="countdownInMinutes"
-            :on-elapsed="onTimerElapsed"
-            :auto-start="autoStartTimer"
-            :count-upwards="countUpwardsTimer"
-          />
-          <br />
-          <v-btn @click="toggleShowSettings">Show Settings</v-btn>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col> <PomodoroSettings v-if="showSettings" /> </v-col
-      ></v-row>
-    </v-container>
-  </div>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="auto">
+        <timer
+          :initial-value="countdownInMinutes"
+          :on-elapsed="onTimerElapsed"
+          :auto-start="autoStartTimer"
+          :count-upwards="countUpwardsTimer"
+          :color="timerDisplayColor"
+        />
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="auto">
+        <v-btn @click="toggleShowSettings">{{
+          !showSettings ? "Show Settings" : "Hide Settings"
+        }}</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col> <PomodoroSettings v-if="showSettings" /> </v-col
+    ></v-row>
+  </v-container>
 </template>
 
 <script>
@@ -72,6 +76,13 @@ export default {
         return true;
       } else {
         return false;
+      }
+    },
+    timerDisplayColor() {
+      if (this.isWorkStage) {
+        return "deep-orange";
+      } else {
+        return "success";
       }
     },
     ...mapGetters("Pomodoro", [
