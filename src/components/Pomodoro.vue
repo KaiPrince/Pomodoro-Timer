@@ -41,11 +41,7 @@ export default {
   data() {
     return { showSettings: false, firstRun: true };
   },
-  created() {
-    // Request notification permission
 
-    Notification.requestPermission();
-  },
   computed: {
     countdownInMinutes() {
       if (this.isWorkStage) {
@@ -106,6 +102,10 @@ export default {
       "countUpwards",
       "countUpwardsBreak"
     ])
+  },
+  created() {
+    // Request notification permission
+    Notification.requestPermission();
   },
   methods: {
     toggleShowSettings() {
