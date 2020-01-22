@@ -2,24 +2,32 @@
   given duration -->
 
 <template>
-  <div>
-    <p>
-      <v-progress-circular
-        :value="timerProgress"
-        size="100"
-        rotate="270"
-        width="13"
-        :color="color"
-      >
-        <span data-testid="timer-display">{{ timerDisplay }}</span>
-      </v-progress-circular>
-    </p>
-    <v-btn @click="onClickStartStop">
-      {{ !timerRunning ? "Start" : "Pause" }}
-    </v-btn>
-    <v-btn v-if="timerRunning" @click="onClickSkip">Skip</v-btn>
-    <v-btn v-if="timerRunning" @click="onClickReset">Reset</v-btn>
-  </div>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="auto">
+        <p>
+          <v-progress-circular
+            :value="timerProgress"
+            size="100"
+            rotate="270"
+            width="13"
+            :color="color"
+          >
+            <span data-testid="timer-display">{{ timerDisplay }}</span>
+          </v-progress-circular>
+        </p>
+      </v-col>
+    </v-row>
+    <v-row justify="center">
+      <v-col cols="auto">
+        <v-btn @click="onClickStartStop">
+          {{ !timerRunning ? "Start" : "Pause" }}
+        </v-btn>
+        <v-btn v-if="timerRunning" @click="onClickSkip">Skip</v-btn>
+        <v-btn v-if="timerRunning" @click="onClickReset">Reset</v-btn>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>

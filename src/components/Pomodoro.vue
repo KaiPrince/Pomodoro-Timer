@@ -1,26 +1,24 @@
 <!-- A Pomodoro with Timer, Start/Stop and Reset buttons. -->
 
 <template>
-  <div>
-    <v-container>
-      <v-row>
-        <v-col>
-          <timer
-            :initial-value="countdownInMinutes"
-            :on-elapsed="onTimerElapsed"
-            :auto-start="autoStartTimer"
-            :count-upwards="countUpwardsTimer"
-            :color="timerDisplayColor"
-          />
-          <br />
-          <v-btn @click="toggleShowSettings">Show Settings</v-btn>
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col> <PomodoroSettings v-if="showSettings" /> </v-col
-      ></v-row>
-    </v-container>
-  </div>
+  <v-container>
+    <v-row justify="center">
+      <v-col cols="auto">
+        <timer
+          :initial-value="countdownInMinutes"
+          :on-elapsed="onTimerElapsed"
+          :auto-start="autoStartTimer"
+          :count-upwards="countUpwardsTimer"
+          :color="timerDisplayColor"
+        />
+        <br />
+        <v-btn @click="toggleShowSettings">Show Settings</v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col> <PomodoroSettings v-if="showSettings" /> </v-col
+    ></v-row>
+  </v-container>
 </template>
 
 <script>
