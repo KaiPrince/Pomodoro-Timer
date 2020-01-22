@@ -3,7 +3,13 @@
 
 <template>
   <div>
-    <v-progress-circular size="100" rotate="270" :value="timerProgress" />
+    <v-progress-circular
+      :value="timerProgress"
+      size="100"
+      rotate="270"
+      width="15"
+      color="success"
+    />
     <p data-testid="timer-display">{{ timerDisplay }}</p>
     <v-btn @click="onClickStartStop">
       {{ !timerRunning ? "Start" : "Pause" }}
