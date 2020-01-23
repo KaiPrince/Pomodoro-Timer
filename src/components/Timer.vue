@@ -191,6 +191,7 @@ export default {
     },
     onClickStart() {
       this.timerStartTime = Date.now();
+      this.currentTime = Date.now();
 
       if (this.elapsed) {
         this.elapsed = false;
@@ -202,6 +203,7 @@ export default {
     },
     onClickReset() {
       this.timerStartTime = Date.now();
+      this.currentTime = Date.now();
       this.timerRunning = false;
     },
     onClickSkip() {
