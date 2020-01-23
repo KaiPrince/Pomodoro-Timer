@@ -69,7 +69,8 @@ export default {
   data() {
     return {
       tickTimer: "",
-      timeRemaining: getTimeFromMinutes(this.initialValue),
+      timerStartTime: Date.now(),
+      currentTime: Date.now(),
       timerRunning: this.autoStart,
       elapsed: false
     };
@@ -77,6 +78,27 @@ export default {
   computed: {
     initialTimeRemaining: function() {
       return getTimeFromMinutes(this.initialValue);
+    },
+    projectedEndTime: function() {
+      const projectedEndTime = new Date(
+        new Date(this.timerStartTime).getTime() + this.initialTimeRemaining
+      );
+
+      return projectedEndTime;
+    },
+    timeRemaining: function() {
+      // Set the date we're counting down to
+      var countDownDate = this.projectedEndTime.getTime();
+
+      // Get today's date and time
+      // ..We use the currentTime data value rather than Date.now() because we
+      // ..need to trigger an update of this computed value every second.
+      var now = this.currentTime;
+
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+
+      return distance;
     },
     timerDisplay: function() {
       let timeValue;
@@ -118,8 +140,8 @@ export default {
     }
   },
   watch: {
-    initialValue: function(newValue) {
-      this.timeRemaining = getTimeFromMinutes(newValue);
+    initialValue: function() {
+      this.timerStartTime = Date.now();
 
       if (this.autoStart) {
         this.timerRunning = true;
@@ -149,8 +171,9 @@ export default {
     updateTimeRemaining() {
       if (this.timerRunning) {
         if (this.timeRemaining > TIMER_TICK_TIME) {
-          // Decrement timer.
-          this.timeRemaining -= TIMER_TICK_TIME;
+          // Update currentTime.
+          // This triggers an update of the timerDisplay computed value.
+          this.currentTime = Date.now();
         } else {
           // Trigger when timer expires.
           this.timerElapsed();
@@ -167,8 +190,10 @@ export default {
       }
     },
     onClickStart() {
+      this.timerStartTime = Date.now();
+      this.currentTime = Date.now();
+
       if (this.elapsed) {
-        this.timeRemaining = this.initialTimeRemaining;
         this.elapsed = false;
       }
       this.timerRunning = true;
@@ -177,11 +202,12 @@ export default {
       this.timerRunning = false;
     },
     onClickReset() {
-      this.timeRemaining = this.initialTimeRemaining;
+      this.timerStartTime = Date.now();
+      this.currentTime = Date.now();
       this.timerRunning = false;
     },
     onClickSkip() {
-      this.timeRemaining = 0;
+      this.timerStartTime = Date.now();
 
       this.timerElapsed();
     },
