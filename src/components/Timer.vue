@@ -190,8 +190,9 @@ export default {
       }
     },
     onClickStart() {
+      this.timerStartTime = Date.now();
+
       if (this.elapsed) {
-        this.timerStartTime = Date.now();
         this.elapsed = false;
       }
       this.timerRunning = true;
