@@ -142,6 +142,7 @@ export default {
   watch: {
     initialValue: function() {
       this.timerStartTime = Date.now();
+      this.currentTime = Date.now();
 
       if (this.autoStart) {
         this.timerRunning = true;
