@@ -190,7 +190,7 @@ export default {
       if (!this.timerRunning) {
         this.onClickStart();
       } else {
-        this.onClickStop();
+        this.onClickPause();
       }
     },
     onClickStart() {
@@ -202,7 +202,7 @@ export default {
       }
       this.timerRunning = true;
     },
-    onClickStop() {
+    onClickPause() {
       this.timerRunning = false;
     },
     onClickReset() {
