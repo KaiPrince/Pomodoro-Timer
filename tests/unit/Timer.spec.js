@@ -244,9 +244,9 @@ describe("Timer", () => {
     const beforePauseTimerValue = timerDisplay.innerHTML;
 
     // Act
-    await fireEvent(pauseButton).click();
+    await fireEvent.click(pauseButton);
     await Vue.nextTick();
-    await fireEvent(startButton).click();
+    await fireEvent.click(startButton);
 
     // Assert
     await wait(
