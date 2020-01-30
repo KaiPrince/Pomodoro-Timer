@@ -100,9 +100,6 @@ export default {
     }
   },
   methods: {
-    toggleShowSettings() {
-      this.showSettings = !this.showSettings;
-    },
     onTimerElapsed() {
       if (this.isWorkStage) {
         // Display a notification on the browser
