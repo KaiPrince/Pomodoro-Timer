@@ -246,6 +246,7 @@ describe("Timer", () => {
     // Act
     await fireEvent.click(pauseButton);
     await Vue.nextTick();
+    await sleep(1001);
     await fireEvent.click(startButton);
 
     // Assert
