@@ -20,10 +20,7 @@
     </v-row>
     <v-row justify="center">
       <v-col cols="auto">
-        <v-btn
-          :color="!timerRunning ? 'success' : 'normal'"
-          @click="onClickStartPause"
-        >
+        <v-btn @click="onClickStartPause">
           {{ !timerRunning ? "Start" : "Pause" }}
         </v-btn>
       </v-col>
