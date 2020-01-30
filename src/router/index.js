@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import Pomodoro from "../views/Pomodoro.vue";
+import Settings from "../views/Settings.vue";
 
 Vue.use(VueRouter);
 
@@ -9,6 +10,11 @@ const routes = [
     path: "/",
     name: "home",
     component: Pomodoro
+  },
+  {
+    path: "/settings",
+    name: "settings",
+    component: Settings
   }
 ];
 
