@@ -221,4 +221,42 @@ describe("Timer", () => {
       { timeout: 1001 }
     );
   });
+
+  it("Pauses the timer and continues where it left off", async function() {
+    // Arrange
+    const { getByText, getByTestId } = renderTimerComponent(25);
+    const startButton = getByText(/Start/i).closest("button");
+    const timerDisplay = getByTestId("timer-display");
+
+    //..Start timer
+    await fireEvent.click(startButton);
+    await Vue.nextTick();
+
+    const pauseButton = getByText(/Pause/i).closest("button");
+
+    //..Wait for timer to move 1 second.
+    await wait(
+      () => {
+        const timerDisplayValue = timerDisplay.innerHTML;
+        expect(timerDisplayValue).to.equal("24:59");
+      },
+      { timeout: 1200 }
+    );
+
+    const beforePauseTimerValue = timerDisplay.innerHTML;
+
+    // Act
+    await fireEvent(pauseButton).click();
+    await Vue.nextTick();
+    await fireEvent(startButton).click();
+
+    // Assert
+    await wait(
+      () => {
+        const afterPauseTimerValue = timerDisplay.innerHTML;
+        expect(beforePauseTimerValue).to.equal(afterPauseTimerValue);
+      },
+      { timeout: 100 }
+    );
+  });
 });
