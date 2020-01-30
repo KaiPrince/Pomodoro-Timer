@@ -5,7 +5,7 @@
     <v-row
       ><v-col>
         <v-row no-gutters>
-          <v-col offset="4" cols="2">
+          <v-col offset="4">
             <v-btn icon to="/"><v-icon>mdi-arrow-left</v-icon></v-btn>
           </v-col>
         </v-row>
