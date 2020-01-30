@@ -208,7 +208,8 @@ export default {
       this.timerRunning = false;
     },
     onClickSkip() {
-      this.timerStartTime = Date.now();
+      // this.timerStartTime = Date.now();
+      this.currentTime = this.projectedEndTime;
 
       this.timerElapsed();
     },
