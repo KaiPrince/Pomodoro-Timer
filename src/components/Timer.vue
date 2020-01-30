@@ -22,7 +22,7 @@
       <v-col cols="auto">
         <v-btn
           :color="!timerRunning ? 'success' : 'normal'"
-          @click="onClickStartStop"
+          @click="onClickStartPause"
         >
           {{ !timerRunning ? "Start" : "Pause" }}
         </v-btn>
@@ -186,7 +186,7 @@ export default {
         // Do nothing if timer is not running.
       }
     },
-    onClickStartStop: function() {
+    onClickStartPause: function() {
       if (!this.timerRunning) {
         this.onClickStart();
       } else {
