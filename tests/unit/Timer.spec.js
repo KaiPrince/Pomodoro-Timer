@@ -252,7 +252,7 @@ describe("Timer", () => {
     await wait(
       () => {
         const afterPauseTimerValue = timerDisplay.innerHTML;
-        expect(beforePauseTimerValue).to.equal(afterPauseTimerValue);
+        expect(afterPauseTimerValue).to.equal(beforePauseTimerValue);
       },
       { timeout: 100 }
     );
