@@ -112,8 +112,6 @@ describe("Timer", () => {
 
     const skipButton = getByText(/Skip/i).closest("button");
 
-    await sleep(1000);
-
     // Act
     fireEvent.click(skipButton);
     await Vue.nextTick();
@@ -125,7 +123,7 @@ describe("Timer", () => {
 
         expect(timerDisplayValue).to.equal("00:00");
       },
-      { timeout: 10 }
+      { timeout: 1000 }
     );
   });
 
@@ -218,7 +216,7 @@ describe("Timer", () => {
         const nextTimerDisplayValue = timerDisplay.innerHTML;
         expect(nextTimerDisplayValue).to.equal("00:01");
       },
-      { timeout: 1001 }
+      { timeout: 1500 }
     );
   });
 

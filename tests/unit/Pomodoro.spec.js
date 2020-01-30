@@ -222,13 +222,16 @@ describe("Pomodoro", function() {
     //..Work Stage
     await clickStartAndSkip();
 
-    await sleep(1001);
-
     // Assert
-    //..Break Stage
-    const timerDisplay = getByTestId("timer-display");
-    const timerDisplayValue = timerDisplay.innerHTML;
-    expect(timerDisplayValue).to.equal("04:59");
+    await wait(
+      () => {
+        //..Break Stage
+        const timerDisplay = getByTestId("timer-display");
+        const timerDisplayValue = timerDisplay.innerHTML;
+        expect(timerDisplayValue).to.equal("04:59");
+      },
+      { timeout: 1500 }
+    );
   });
 
   it("Counts up", async function() {
@@ -261,7 +264,7 @@ describe("Pomodoro", function() {
         const timerDisplayValue = timerDisplay.innerHTML;
         expect(timerDisplayValue).to.equal("00:01");
       },
-      { timeout: 1001 }
+      { timeout: 1500 }
     );
   });
 
@@ -295,7 +298,7 @@ describe("Pomodoro", function() {
         const timerDisplayValue = timerDisplay.innerHTML;
         expect(timerDisplayValue).to.equal("00:01");
       },
-      { timeout: 1001 }
+      { timeout: 1500 }
     );
   });
 
@@ -329,7 +332,7 @@ describe("Pomodoro", function() {
         const timerDisplayValue = timerDisplay.innerHTML;
         expect(timerDisplayValue).to.equal("00:01");
       },
-      { timeout: 1001 }
+      { timeout: 1500 }
     );
   });
 });

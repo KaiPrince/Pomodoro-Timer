@@ -105,7 +105,11 @@ export default {
   },
   created() {
     // Request notification permission
-    Notification.requestPermission();
+    try {
+      Notification.requestPermission();
+    } catch (exception) {
+      // Do nothing.
+    }
   },
   methods: {
     toggleShowSettings() {
@@ -114,8 +118,12 @@ export default {
     onTimerElapsed() {
       if (this.isWorkStage) {
         // Display a notification on the browser
-        if (Notification.permission == "granted") {
-          new Notification("Time for a break!");
+        try {
+          if (Notification.permission == "granted") {
+            new Notification("Time for a break!");
+          }
+        } catch (exception) {
+          // Do nothing.
         }
 
         // Set cycles and stage
@@ -127,8 +135,12 @@ export default {
         }
       } else {
         // Display a notification on the browser
-        if (Notification.permission == "granted") {
-          new Notification("Time for work!");
+        try {
+          if (Notification.permission == "granted") {
+            new Notification("Time for work!");
+          }
+        } catch (exception) {
+          // Do nothing.
         }
 
         // Set cycles and stage
