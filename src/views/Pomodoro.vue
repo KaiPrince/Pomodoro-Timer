@@ -5,6 +5,13 @@
     <v-row
       ><v-col>
         <v-row justify="center" align="center"> <Pomodoro /></v-row>
+        <v-row justify="center">
+          <v-col cols="auto">
+            <v-btn text to="/settings" @click="toggleShowSettings">{{
+              !showSettings ? "Show Settings" : "Hide Settings"
+            }}</v-btn>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </v-container>

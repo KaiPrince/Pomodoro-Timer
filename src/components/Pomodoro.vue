@@ -13,33 +13,21 @@
         />
       </v-col>
     </v-row>
-    <v-row justify="center">
-      <v-col cols="auto">
-        <v-btn text @click="toggleShowSettings">{{
-          !showSettings ? "Show Settings" : "Hide Settings"
-        }}</v-btn>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col> <PomodoroSettings v-if="showSettings" /> </v-col
-    ></v-row>
   </v-container>
 </template>
 
 <script>
 import Timer from "./Timer";
-import PomodoroSettings from "./PomodoroSettings";
 import { mapGetters, mapState, mapActions } from "vuex";
 
 export default {
   name: "PomodoroTimer",
   components: {
-    Timer,
-    PomodoroSettings
+    Timer
   },
   props: {},
   data() {
-    return { showSettings: false, firstRun: true };
+    return { firstRun: true };
   },
 
   computed: {
